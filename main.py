@@ -28,14 +28,19 @@ total = 0
 
 # Custom duration to be set by the user
 durationMinutes = int(input("Set your Blinko notification duration in minutes: "))
+print("Blinko will notify you every "+str(durationMinutes)+" minutes if you are not blinking enough. The ideal blink rate is at least 15 blinks per minute.")
 
 start_time = time.time()
 duration = 60*durationMinutes
-idealBlinkRate = 20*durationMinutes
+idealBlinkRate = 15
 
 while True:
 
     while True:
+
+        current_time = time.time()
+        elapsed_time = current_time - start_time
+
         success, img = cap.read()
         imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = detector(imgGray)
@@ -65,12 +70,13 @@ while True:
         if cv2.waitKey(1) & 0xff == ord('q'):
             break
 
-        current_time = time.time()
-        elapsed_time = current_time - start_time
-
         if elapsed_time > duration:
-            start_time = time.time()
-            if total < idealBlinkRate:
-                toastNotifier.show_toast("BLINKO", "You are not blinking enough! Please rest your eyes for a bit.", duration=10)
 
+            avgBlinkRate = total/durationMinutes
+
+            start_time = time.time()
+            if (avgBlinkRate) < idealBlinkRate:
+                toastNotifier.show_toast("BLINKO", " Please rest your eyes for a bit. Your blink rate is "+ str(avgBlinkRate) +" blinks per minutes, which is less than the ideal blink rate of " + str(idealBlinkRate) +" blinks per minute!", duration=10)
+            total = 0
+            count = 0
 
