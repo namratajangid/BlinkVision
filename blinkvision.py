@@ -76,7 +76,7 @@ while True:
 
             start_time = time.time()
             if (avgBlinkRate) < idealBlinkRate:
-                toastNotifier.show_toast("BLINKO", " Please rest your eyes for a bit. Your blink rate is "+ str(avgBlinkRate) +" blinks per minutes, which is less than the ideal blink rate of " + str(idealBlinkRate) +" blinks per minute!", duration=10)
+                toastNotifier.show_toast("BLINK VISION", " Please rest your eyes for a bit. Your blink rate is "+ str(avgBlinkRate) +" blinks per minutes, which is less than the ideal blink rate of " + str(idealBlinkRate) +" blinks per minute!", duration=10)
             total = 0
             count = 0
 
